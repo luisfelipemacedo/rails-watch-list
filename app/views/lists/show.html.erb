@@ -1,15 +1,21 @@
 <div clas="container">
   <h2><%= @list.name %></h2>
-  <p>.....detalhes da lista <%= @list.name %>....</p>
+  <%# <p>.....detalhes da lista <%= @list.name %>
+
+  <%# mostrar os comentarios do bookmark %>
+  <% @list.bookmarks.each do |bookmark|%>
+    <ul>
+    <%= image_tag bookmark.movie.poster_url, height:  300, width: 300 %>
+    <%# turbo_method tem que ter para direcionar para onde a rota irá, turbo confirm é o alerta opcional %>
+    <li><%= bookmark.movie.title %> <%= link_to "Delete", bookmark_path(bookmark), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %></li>
+    <p>comment: <%=bookmark.comment%></p>
+    </ul>
+  <%end%>
+
   <%# botar o detalhes da lista titulo do filme, overview, poster_url, rating (do genero da lista)%>
   <%= link_to "voltar para lista de movies", lists_path %>
   <br>
-  <%= link_to "criar um bookmark", new_list_bookmark_path(@list) %>
+  <%= link_to "Add a movie", new_list_bookmark_path(@list) %>
   <br>
-  <h3>Lista de comments:</h3>
-  <%# mostrar os comentarios do bookmark %>
-  <% @list.bookmarks.each do |bookmark|%>
-    <%= bookmark.comment %>
-  <%end%>
 
 </div>
